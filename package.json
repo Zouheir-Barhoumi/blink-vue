@@ -1,0 +1,16 @@
+{
+  "name": "blink-vue",
+  "version": "1.0.0",
+  "description": "Blink-Vue is a real-time chat application. It uses Node.js, MongoDB, Express, Vue.js (MEVN stack) and Socket.io. Its main functionality includes real-time messaging, user authentication, typing and status indicators.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zouheir Barhoumi",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "prettier-eslint": "^16.3.0"
+  }
+}
