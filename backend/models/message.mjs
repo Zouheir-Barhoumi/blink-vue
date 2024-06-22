@@ -1,21 +1,13 @@
 import mongoose from "mongoose";
 
 const msgSchema = new mongoose.Schema({
-  messageId: {
-    type: mongoose.Schema.Types.ObjectId,
-  },
-  sender: {
+  senderId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  receiver: {
+  receiverId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  message: {
-    type: String,
     ref: "User",
     required: true,
   },
@@ -23,7 +15,7 @@ const msgSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  timestamp: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
