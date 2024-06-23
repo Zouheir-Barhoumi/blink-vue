@@ -1,12 +1,20 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
+// configure dotenv file
+dotenv.config({
+  path: join(dirname(fileURLToPath(import.meta.url)), "../.env"),
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origins: ["http://localhost:3000", "http://localhost:5000"],
     credentials: true,
   }),
 );
