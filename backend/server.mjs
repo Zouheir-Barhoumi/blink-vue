@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
 
 // configure dotenv file
 dotenv.config({
@@ -20,9 +21,10 @@ app.use(
 );
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+mongoose
+  .connect(process.env.MONGO_URI, {})
+  .then(() => console.log("MongoDB connection established!"))
+  .catch((err) => console.log(err));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
