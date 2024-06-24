@@ -10,13 +10,13 @@ const register = async (req, res) => {
 
     // Validate input
     if (!notEmpty(username) || !notEmpty(email) || !notEmpty(password)) {
-      return res.status(400).send({ message: "Missing required fields" });
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
     // Check if email is already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).send({ error: "Email already in use" });
+      return res.status(400).json({ error: "Email already in use" });
     }
 
     // Hash the password
@@ -34,9 +34,56 @@ const register = async (req, res) => {
       username: newUser.username,
       email: newUser.email,
     };
-    return res.status(201).send(user);
+    return res.status(201).json(user);
   } catch (error) {
     console.log(`Error registering user: ${error}`);
-    return res.status(500).send({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
+};
+
+// Generate jwt token
+const generateJWT = (user) => {
+  const payload = {
+    id: user._id,
+  };
+  const secret = process.env.JWT_SECRET;
+  const options = { expiresIn: "1h" };
+  return jwt.sign(payload, secret, options);
+};
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validate input
+    if (!notEmpty(email) || !notEmpty(password)) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log(`User with email ${email} does not exist`);
+      return res
+        .status(400)
+        .json({ error: "Incorrect password or user does not exist" });
+    }
+
+    // Check if password is
+    const correctPwd = await bcrypt.compare(password, user.password);
+    if (!correctPwd) {
+      return res
+        .status(400)
+        .json({ error: "Incorrect password or user does not exist" });
+    }
+
+    // Send jwt token and user without password
+    const token = generateJWT(user);
+    user = {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    };
+    return res.status(200).json({ token, user });
+  } catch (error) {}
 };
