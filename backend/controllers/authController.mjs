@@ -1,12 +1,15 @@
 import bcrypt from "bcrypt";
 import User from "../models/users.mjs";
 
-const rgister = async (req, res) => {
+const notEmpty = (value) =>
+  value !== undefined && value !== null && value.length > 0;
+
+const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
     // Validate input
-    if (!username || !email || !password) {
+    if (!notEmpty(username) || !notEmpty(email) || !notEmpty(password)) {
       return res.status(400).send({ message: "Missing required fields" });
     }
 
