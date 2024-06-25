@@ -131,7 +131,13 @@ paths:
                       type: string
                     username:
                       type: string
+                    email:
+                      type: string
+                    profilePicture:
+                      type: string
                     status:
+                      type: string
+                    createdAt:
                       type: string
         "400":
           description: Access denied (authentication required or missing authorization)

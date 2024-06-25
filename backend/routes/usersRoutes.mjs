@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  getUser,
+  getUserDetails,
   getAllUsers,
   getUserContacts,
 } from "../controllers/usersController.mjs";
@@ -8,5 +8,5 @@ import {
 const router = express.Router();
 
 router.get("/", getAllUsers);
-router.get("/:id", getUser);
+router.get("/:id", getUserDetails);
 router.get("/:id/contacts", getUserContacts);

@@ -1,6 +1,6 @@
 import User from "../models/users.mjs";
 
-const getUser = async (req, res) => {
+const getUserDetails = async (req, res) => {
   try {
     const user = await user.findById(req.params.id).select("-password");
     if (!user) return res.status(404).json({ error: "User not found" });
