@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
+import authRoutes from "./routes/authRoutes.mjs";
+import * as OpenApiValidator from "express-openapi-validator";
 
 // configure dotenv file
 dotenv.config({
@@ -19,12 +21,23 @@ app.use(
     credentials: true,
   }),
 );
+
 app.use(express.json());
 
 mongoose
   .connect(process.env.MONGO_URI, {})
   .then(() => console.log("MongoDB connection established!"))
   .catch((err) => console.log(err));
+
+app.use(
+  OpenApiValidator.middleware({
+    apiSpec: "./specs.yaml",
+    validateRequests: true,
+    validateResponses: true,
+  }),
+);
+
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
