@@ -12,3 +12,5 @@ router.get("/", getAllUsers);
 router.get("/:id", getUserDetails);
 router.get("/:id/contacts", getUserContacts);
 router.post("/:id/contacts", addContact);
+
+export default router;

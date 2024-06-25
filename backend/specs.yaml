@@ -137,8 +137,6 @@ paths:
                       type: string
                     status:
                       type: string
-                    createdAt:
-                      type: string
         "400":
           description: Access denied (authentication required or missing authorization)
           content:
