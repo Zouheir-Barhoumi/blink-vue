@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../models/users.mjs";
 
 const notEmpty = (value) =>
@@ -79,12 +80,12 @@ const login = async (req, res) => {
 
     // Send jwt token and user without password
     const token = generateJWT(user);
-    user = {
+    const userDetails = {
       id: user._id,
       username: user.username,
       email: user.email,
     };
-    return res.status(200).json({ token, user });
+    return res.status(200).json({ token, userDetails });
   } catch (error) {
     console.log(`Error logging in: ${error}`);
     return res.status(500).json({ message: "Internal server error" });
