@@ -95,13 +95,25 @@ paths:
                         type: string
                       email:
                         type: string
-        "400":
-          description: Invalid credentials
-        "404":
-          description: User not found
-        "500":
+         '400':
+          description: Bad request (missing required fields or incorrect credentials)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
           description: Internal server error
-
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    
   /api/users:
     get:
       summary: Get list of users
