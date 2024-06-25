@@ -275,6 +275,8 @@ components:
           type: string
         status:
           type: string
+        contacts:
+          type: array
 
     Message:
       type: object
