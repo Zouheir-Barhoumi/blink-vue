@@ -227,6 +227,15 @@ paths:
                     type: array
                     items:
                       type: object
+                      properties:
+                        _id:
+                          type: string
+                        username:
+                          type: string
+                        status:
+                          type: string
+                        profilePicture:
+                          type: string
         "400":
           description: Invalid request or contact already in contacts
           content:
