@@ -314,6 +314,38 @@ paths:
                   error:
                     type: string
 
+  /api/messages:
+    post:
+      summary: Send a message to a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                receiverId:
+                  type: string
+                content:
+                  type: string
+              required:
+                - receiverId
+                - message
+      responses:
+        "201":
+          description: Message sent successfully
+        "400":
+          description: Access denied (authentication required or missing authorization)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "500":
+          description: Internal server error
+
   /api/messages/{userId}:
     get:
       summary: Get messages between authenticated user and specified user
@@ -344,38 +376,6 @@ paths:
                     createdAt:
                       type: string
                       format: date-time
-        "400":
-          description: Access denied (authentication required or missing authorization)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-        "500":
-          description: Internal server error
-
-  /api/messages:
-    post:
-      summary: Send a message to a user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                receiverId:
-                  type: string
-                content:
-                  type: string
-              required:
-                - receiverId
-                - message
-      responses:
-        "201":
-          description: Message sent successfully
         "400":
           description: Access denied (authentication required or missing authorization)
           content:
