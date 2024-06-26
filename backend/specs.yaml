@@ -254,6 +254,56 @@ paths:
                 properties:
                   error:
                     type: string
+    get:
+      summary: Get a user's contacts list
+      description: Retrieves the list of contacts for a specified user
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the user whose contacts are being retrieved
+      responses:
+        "200":
+          description: A list of the user's contacts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                    username:
+                      type: string
+                    status:
+                      type: string
+                    profilePicture:
+                      type: string
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 
   /api/messages/{userId}:
     get:

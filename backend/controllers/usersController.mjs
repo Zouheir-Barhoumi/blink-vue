@@ -26,7 +26,14 @@ const getUserContacts = async (req, res) => {
     );
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    res.json(user.contacts);
+    const contacts = user.contacts.map((contact) => ({
+      _id: String(contact._id),
+      username: contact.username,
+      status: contact.status,
+      profilePicture: contact.profilePicture,
+    }));
+
+    res.json(contacts);
   } catch (error) {
     console.log(`Error getting user contacts: ${error}`);
     return res.status(500).json({ error: "Internal server error" });
