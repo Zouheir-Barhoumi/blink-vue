@@ -314,9 +314,15 @@ paths:
                   error:
                     type: string
 
-  /api/messages:
+  /api/messages{userId}:
     post:
-      summary: Send a message to a user
+      summary: Send a message between authenticated user and specified user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
