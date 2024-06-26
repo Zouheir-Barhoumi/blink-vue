@@ -186,6 +186,75 @@ paths:
         "500":
           description: Internal server error
 
+  /api/users/{id}/contacts:
+    post:
+      summary: Add a contact to the user's contacts list
+      description: Adds a new contact to the authenticated user's contacts list
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the user to whom the contact is being added
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - contactId
+              properties:
+                contactId:
+                  type: string
+                  description: The ID of the user to be added as a contact
+      responses:
+        "201":
+          description: Contact added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  contacts:
+                    type: array
+                    items:
+                      type: object
+        "400":
+          description: Invalid request or contact already in contacts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
   /api/messages/{userId}:
     get:
       summary: Get messages between authenticated user and specified user

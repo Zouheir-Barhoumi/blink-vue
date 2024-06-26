@@ -42,15 +42,15 @@ const addContact = async (req, res) => {
     if (!contact) return res.status(404).json({ error: "User not found" });
 
     // Check if the user is trying to add themselves
-    if (user.id === contact.id)
+    if (userId === contactId)
       return res.status(400).json({ error: "Invalid request" });
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ error: "User not found" });
 
     // Check if the contact is already in the user's contacts
-    if (user.contacts.includes(contact.id)) {
-      return res.status(400).json({ error: "Contact already in contacts" });
+    if (user.contacts.includes(contactId)) {
+      return res.status(400).json({ error: "User already in contacts" });
     }
 
     user.contacts.push(contactId);
