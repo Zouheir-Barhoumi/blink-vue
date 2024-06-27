@@ -345,7 +345,23 @@ paths:
                   error:
                     type: string
         "400":
-          description: Access denied (authentication required or missing authorization)
+          description: Access denied or missing required data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              examples:
+                access_denied:
+                  value:
+                    error: "Access denied due to invalid credentials"
+                missing_data:
+                  value:
+                    error: "Missing required data: content"
+        "404":
+          description: User not found
           content:
             application/json:
               schema:

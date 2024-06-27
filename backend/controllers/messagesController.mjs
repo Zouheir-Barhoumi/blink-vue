@@ -28,7 +28,7 @@ const sendMessage = async (req, res) => {
 
     if (!sender || !receiver) {
       console.log(`Couldn't find user ${sender} or ${receiver}`);
-      res.status(404).json({
+      return res.status(404).json({
         error: "Couldn't find user",
       });
     }
