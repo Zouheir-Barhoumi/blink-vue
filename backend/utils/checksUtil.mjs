@@ -1,4 +1,4 @@
 const NotEmpty = (value) =>
-  value !== undefined && value !== null && value.length > 0;
+  value !== undefined && value !== null && value.trim() !== "";
 
 export { NotEmpty };
