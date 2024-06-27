@@ -29,5 +29,17 @@ const sendMessage = async (req, res) => {
         error: "Couldn't find user",
       });
     }
-  } catch (error) {}
+
+    // Save the message
+    const newMsg = new Message({
+      senderId,
+      receiverId,
+      content,
+    });
+    await newMsg.save();
+
+    res.status(201).json({ message: "Message sent successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
