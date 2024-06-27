@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import authRoutes from "./routes/authRoutes.mjs";
 import usersRoutes from "./routes/usersRoutes.mjs";
+import messagesRoutes from "./routes/messagesRoutes.mjs";
 import * as OpenApiValidator from "express-openapi-validator";
 
 // configure dotenv file
