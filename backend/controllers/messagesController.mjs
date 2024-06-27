@@ -21,10 +21,10 @@ const sendMessage = async (req, res) => {
     }
 
     // check if senderId and receiverId exist in the database
-    const [sender, receiver] = Promise.all(
+    const [sender, receiver] = await Promise.all([
       User.findById(senderId),
       User.findById(receiverId),
-    );
+    ]);
 
     if (!sender || !receiver) {
       console.log(`Couldn't find user ${sender} or ${receiver}`);

@@ -314,15 +314,9 @@ paths:
                   error:
                     type: string
 
-  /api/messages{userId}:
+  /api/messages:
     post:
       summary: Send a message between authenticated user and specified user
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
       requestBody:
         required: true
         content:
@@ -330,16 +324,26 @@ paths:
             schema:
               type: object
               properties:
+                senderId:
+                  type: string
                 receiverId:
                   type: string
                 content:
                   type: string
               required:
+                - senderId
                 - receiverId
-                - message
+                - content
       responses:
         "201":
           description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         "400":
           description: Access denied (authentication required or missing authorization)
           content:
