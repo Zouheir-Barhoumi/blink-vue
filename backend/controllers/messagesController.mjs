@@ -5,19 +5,21 @@ import { NotEmpty, isValidObjectId } from "../utils/checksUtil.mjs";
 const sendMessage = async (req, res) => {
   try {
     const { senderId, receiverId, content } = req.body;
-    // Check if senderId and receiverId are valid
-    if (!senderId || !receiverId) {
-      return res.status(400).json({
-        error: "Please provide senderId and receiverId",
-      });
-    }
 
-    // Check if content is valid
+    // Validate senderId, receiverId, and content
+    if (!senderId || !receiverId) {
+      return res
+        .status(400)
+        .json({ error: "Please provide senderId and receiverId" });
+    }
     if (!NotEmpty(content)) {
       console.log("Empty message content");
-      return res.status(400).json({
-        error: "Can't send empty message",
-      });
+      return res.status(400).json({ error: "Can't send empty message" });
+    }
+    if (!isValidObjectId(senderId) || !isValidObjectId(receiverId)) {
+      return res
+        .status(400)
+        .json({ error: "Invalid senderId or receiverId format" });
     }
 
     // Check if senderId and receiverId exist in the database
@@ -28,17 +30,11 @@ const sendMessage = async (req, res) => {
 
     if (!sender || !receiver) {
       console.log(`Couldn't find user ${senderId} or ${receiverId}`);
-      return res.status(404).json({
-        error: "Couldn't find user",
-      });
+      return res.status(404).json({ error: "Couldn't find user" });
     }
 
     // Save the message
-    const newMsg = new Message({
-      senderId,
-      receiverId,
-      content,
-    });
+    const newMsg = new Message({ senderId, receiverId, content });
     await newMsg.save();
 
     res.status(201).json({ message: "Message sent successfully" });
@@ -54,38 +50,40 @@ const getUserMessages = async (req, res) => {
 
     // Validate userId and contactId
     if (!userId || !contactId) {
-      return res.status(400).json({
-        error: "Please provide userId and contactId",
-      });
+      return res
+        .status(400)
+        .json({ error: "Please provide userId and contactId" });
     }
-
-    // Validate ObjectId format
     if (!isValidObjectId(userId) || !isValidObjectId(contactId)) {
       return res
         .status(400)
         .json({ error: "Invalid userId or contactId format" });
     }
 
-    const user = await User.findById(userId);
-    const contact = await User.findById(contactId);
-
     // Check if user and contact exist
+    const [user, contact] = await Promise.all([
+      User.findById(userId),
+      User.findById(contactId),
+    ]);
+
     if (!user) {
-      console.log(`user ${userId} not found`);
+      console.log(`User ${userId} not found`);
       return res.status(404).json({ error: "User not found" });
     }
     if (!contact) {
-      console.log(`contact ${contactId} not found`);
+      console.log(`Contact ${contactId} not found`);
       return res.status(404).json({ error: "Contact not found" });
     }
 
+    // Find messages exchanged between user and contact
     const messages = await Message.find({
       $or: [
-        { $and: [{ senderId: userId }, { receiverId: contactId }] },
-        { $and: [{ senderId: contactId }, { receiverId: userId }] },
+        { senderId: userId, receiverId: contactId },
+        { senderId: contactId, receiverId: userId },
       ],
     }).sort({ createdAt: -1 });
 
+    // Format messages for response
     const formattedMessages = messages.map((message) => ({
       _id: String(message._id),
       senderId: String(message.senderId),
@@ -93,10 +91,11 @@ const getUserMessages = async (req, res) => {
       content: message.content,
       createdAt: message.createdAt,
     }));
-    console.log(formattedMessages);
+
     res.status(200).json(formattedMessages);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 export { sendMessage, getUserMessages };
