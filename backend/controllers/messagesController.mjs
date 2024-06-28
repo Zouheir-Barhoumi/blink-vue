@@ -5,14 +5,14 @@ import NotEmpty from "../utils/checksUtil.mjs";
 const sendMessage = async (req, res) => {
   try {
     const { senderId, receiverId, content } = req.body;
-    // check if senderId and receiverId are valid
+    // Check if senderId and receiverId are valid
     if (!senderId || !receiverId) {
       return res.status(400).json({
         error: "Please provide senderId and receiverId",
       });
     }
 
-    // check if content is valid
+    // Check if content is valid
     if (!NotEmpty(content)) {
       console.log("Empty message content");
       return res.status(400).json({
@@ -20,14 +20,14 @@ const sendMessage = async (req, res) => {
       });
     }
 
-    // check if senderId and receiverId exist in the database
+    // Check if senderId and receiverId exist in the database
     const [sender, receiver] = await Promise.all([
       User.findById(senderId),
       User.findById(receiverId),
     ]);
 
     if (!sender || !receiver) {
-      console.log(`Couldn't find user ${sender} or ${receiver}`);
+      console.log(`Couldn't find user ${senderId} or ${receiverId}`);
       return res.status(404).json({
         error: "Couldn't find user",
       });
