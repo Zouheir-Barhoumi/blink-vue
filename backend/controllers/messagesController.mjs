@@ -49,24 +49,38 @@ const sendMessage = async (req, res) => {
 
 const getUserMessages = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const userId = req.params.id;
     const { contactId } = req.body;
 
     const user = await User.findById(userId);
     const contact = await User.findById(contactId);
-    // check if senderId and receiverId are valid
-    if (!senderId || !receiverId) {
-      return res.status(400).json({
-        error: "Please provide senderId and receiverId",
-      });
+
+    // Check if user and contact exist
+    if (!user) {
+      console.log(`user ${userId} not found`);
+      return res.status(404).json({ error: "User not found" });
     }
+    if (!contact) {
+      console.log(`contact ${contactId} not found`);
+      return res.status(404).json({ error: "Contact not found" });
+    }
+
     const messages = await Message.find({
       $or: [
-        { $and: [{ senderId: user }, { receiverId: contact }] },
-        { $and: [{ senderId: contact }, { receiverId: user }] },
+        { $and: [{ senderId: userId }, { receiverId: contactId }] },
+        { $and: [{ senderId: contactId }, { receiverId: userId }] },
       ],
     }).sort({ createdAt: -1 });
-    res.status(200).json({ messages });
+
+    const formattedMessages = messages.map((message) => ({
+      _id: String(message._id),
+      senderId: String(message.senderId),
+      receiverId: String(message.receiverId),
+      content: message.content,
+      createdAt: message.createdAt,
+    }));
+    console.log(formattedMessages);
+    res.status(200).json(formattedMessages);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

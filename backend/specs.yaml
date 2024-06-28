@@ -338,8 +338,7 @@ paths:
                     content:
                       type: string
                     createdAt:
-                      type: string
-                      format: date-time
+                      type: object
         "400":
           description: Access denied (authentication required or missing authorization)
           content:
@@ -349,6 +348,8 @@ paths:
                 properties:
                   error:
                     type: string
+        "404":
+          $ref: "#/components/responses/UserNotFound"
         "500":
           description: Internal server error
 
