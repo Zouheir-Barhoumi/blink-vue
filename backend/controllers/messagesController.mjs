@@ -47,4 +47,28 @@ const sendMessage = async (req, res) => {
   }
 };
 
-export { sendMessage };
+const getUserMessages = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { contactId } = req.body;
+
+    const user = await User.findById(userId);
+    const contact = await User.findById(contactId);
+    // check if senderId and receiverId are valid
+    if (!senderId || !receiverId) {
+      return res.status(400).json({
+        error: "Please provide senderId and receiverId",
+      });
+    }
+    const messages = await Message.find({
+      $or: [
+        { $and: [{ senderId: user }, { receiverId: contact }] },
+        { $and: [{ senderId: contact }, { receiverId: user }] },
+      ],
+    }).sort({ createdAt: -1 });
+    res.status(200).json({ messages });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+export { sendMessage, getUserMessages };

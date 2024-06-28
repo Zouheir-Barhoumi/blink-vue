@@ -307,6 +307,18 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - contactId
+              properties:
+                contactId:
+                  type: string
+                  description: The ID of the user whose messages to get
       responses:
         "200":
           description: List of messages
