@@ -1,6 +1,6 @@
 import Message from "../models/message.mjs";
 import User from "../models/users.mjs";
-import NotEmpty from "../utils/checksUtil.mjs";
+import { NotEmpty, isValidObjectId } from "../utils/checksUtil.mjs";
 
 const sendMessage = async (req, res) => {
   try {
@@ -51,6 +51,20 @@ const getUserMessages = async (req, res) => {
   try {
     const userId = req.params.id;
     const { contactId } = req.body;
+
+    // Validate userId and contactId
+    if (!userId || !contactId) {
+      return res.status(400).json({
+        error: "Please provide userId and contactId",
+      });
+    }
+
+    // Validate ObjectId format
+    if (!isValidObjectId(userId) || !isValidObjectId(contactId)) {
+      return res
+        .status(400)
+        .json({ error: "Invalid userId or contactId format" });
+    }
 
     const user = await User.findById(userId);
     const contact = await User.findById(contactId);

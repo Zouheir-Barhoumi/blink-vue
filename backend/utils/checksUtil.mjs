@@ -1,4 +1,7 @@
+import mongoose from "mongoose";
 const NotEmpty = (value) =>
   value !== undefined && value !== null && value.trim() !== "";
 
-export default NotEmpty;
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+
+export { NotEmpty, isValidObjectId };
