@@ -14,9 +14,15 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    // Check if username is taken
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ error: "Username already in use" });
+    }
+
     // Check if email is already registered
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const existingUserEmail = await User.findOne({ email });
+    if (existingUserEmail) {
       return res.status(400).json({ error: "Email already in use" });
     }
 
