@@ -110,7 +110,16 @@ paths:
                 items:
                   $ref: "#/components/schemas/User"
         "400":
-          description: Access denied (authentication required or missing authorization)
+          description: Bad Request (Invalid token)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "401":
+          description: Unauthorized (No token provided)
           content:
             application/json:
               schema:

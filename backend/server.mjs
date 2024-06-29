@@ -8,6 +8,7 @@ import authRoutes from "./routes/authRoutes.mjs";
 import usersRoutes from "./routes/usersRoutes.mjs";
 import messagesRoutes from "./routes/messagesRoutes.mjs";
 import * as OpenApiValidator from "express-openapi-validator";
+import verifyToken from "./middleware/tokenVerifier.mjs";
 
 // configure dotenv file
 dotenv.config({
@@ -40,8 +41,8 @@ app.use(
 );
 
 app.use("/api/auth", authRoutes);
-app.use("/api/users", usersRoutes);
-app.use("/api/messages", messagesRoutes);
+app.use("/api/users", verifyToken, usersRoutes);
+app.use("/api/messages", verifyToken, messagesRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
