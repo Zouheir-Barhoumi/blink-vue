@@ -47,3 +47,5 @@ app.use("/api/messages", verifyToken, messagesRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+export default app;

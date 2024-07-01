@@ -1,10 +1,10 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "server.mjs",
+  "main": "app.mjs",
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "nodemon server.js"
+    "start": "node app.mjs",
+    "dev": "nodemon app.mjs"
   },
   "author": "Zouheir Barhoumi",
   "license": "MIT",
