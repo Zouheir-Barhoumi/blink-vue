@@ -17,14 +17,15 @@ describe("Auth Routes", () => {
         email: "jestuser1@email.com",
         password: "password123",
       };
+      User.create.mockResolvedValue(user);
 
       const response = await request(app)
         .post("/api/auth/register", user)
         .send(user);
 
       expect(response.status).toBe(201);
-      // expect(response.body.username).toBe(user.username);
-      // expect(response.body.email).toBe(user.email);
+      expect(response.body.username).toBe(user.username);
+      expect(response.body.email).toBe(user.email);
     });
   });
 });
