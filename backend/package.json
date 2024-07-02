@@ -21,11 +21,5 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.3"
   },
-  "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
-    "babel-jest": "^29.7.0",
-    "jest": "^29.7.0",
-    "supertest": "^7.0.0"
-  }
+  "devDependencies": {}
 }
