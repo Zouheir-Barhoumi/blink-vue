@@ -36,6 +36,15 @@ app.use(
   }),
 );
 
+const apiRoutes = /^\/api\//; // RegEx to match /api/ routes
+app.use((req, res, next) => {
+  if (apiRoutes.test(req.path)) {
+    OpenApiValidator.validator()(req, res, next);
+  } else {
+    next();
+  }
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", verifyToken, usersRoutes);
 app.use("/api/messages", verifyToken, messagesRoutes);
