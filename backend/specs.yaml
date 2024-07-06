@@ -210,6 +210,15 @@ paths:
                 properties:
                   error:
                     type: string
+        "401":
+          description: Unauthorized (No token provided)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         "404":
           $ref: "#/components/responses/UserNotFound"
         "500":

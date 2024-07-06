@@ -2,9 +2,12 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import http from "http";
+import { Server } from "socket.io";
 import authRoutes from "./routes/authRoutes.mjs";
 import usersRoutes from "./routes/usersRoutes.mjs";
 import messagesRoutes from "./routes/messagesRoutes.mjs";
+import chatSocket from "./sockets/chatSocket.mjs";
 import * as OpenApiValidator from "express-openapi-validator";
 import verifyToken from "./middleware/tokenVerifier.mjs";
 
@@ -14,9 +17,20 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize socket.io with CORS
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:3000", "http://localhost:5000"],
+    credentials: true,
+  },
+});
+
 app.use(
   cors({
-    origins: ["http://localhost:3000", "http://localhost:5000"],
+    origin: ["http://localhost:3000", "http://localhost:5000"],
     credentials: true,
   }),
 );
@@ -28,7 +42,11 @@ mongoose
   .then(() => console.log("MongoDB connection established!"))
   .catch((err) => console.log(err));
 
-app.use(
+// Create an API router
+const apiRouter = express.Router();
+
+// Apply OpenAPI validator middleware to the API router
+apiRouter.use(
   OpenApiValidator.middleware({
     apiSpec: "./specs.yaml",
     validateRequests: true,
@@ -36,20 +54,19 @@ app.use(
   }),
 );
 
-const apiRoutes = /^\/api\//; // RegEx to match /api/ routes
-app.use((req, res, next) => {
-  if (apiRoutes.test(req.path)) {
-    OpenApiValidator.validator()(req, res, next);
-  } else {
-    next();
-  }
-});
+// Define API routes
+apiRouter.use("/auth", authRoutes);
+apiRouter.use("/users", verifyToken, usersRoutes);
+apiRouter.use("/messages", verifyToken, messagesRoutes);
 
-app.use("/api/auth", authRoutes);
-app.use("/api/users", verifyToken, usersRoutes);
-app.use("/api/messages", verifyToken, messagesRoutes);
+// Use the API router for all /api routes
+app.use("/api", apiRouter);
 
-app.listen(PORT, () => {
+// Attach the socket handler
+chatSocket(io);
+
+// Start the server
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
