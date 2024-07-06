@@ -1,12 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var socket_io_client_1 = require("socket.io-client");
-var socket = (0, socket_io_client_1.io)("http://localhost:5000");
+var socket = (0, socket_io_client_1.io)("http://localhost:5000", {
+    transports: ["websocket"],
+});
 socket.on("connect", function () {
     console.log("Connected to server");
     // Join a chat room
     var joinData = { chatId: "testRoom", userId: "user1" };
-    socket.emit("join", joinData);
+    socket.emit("join", joinData, function (error) {
+        if (error) {
+            console.log("Error joining chat room:", error);
+        }
+        else {
+            console.log("Joined chat room successfully", joinData.chatId);
+        }
+    });
     // Send a message
     var messageData = {
         chatId: "testRoom",

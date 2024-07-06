@@ -18,14 +18,22 @@ interface TypingData {
   user: string;
 }
 
-const socket: Socket = io("http://localhost:5000");
+const socket: Socket = io("http://localhost:5000", {
+  transports: ["websocket"],
+});
 
 socket.on("connect", () => {
   console.log("Connected to server");
 
   // Join a chat room
   const joinData: JoinData = { chatId: "testRoom", userId: "user1" };
-  socket.emit("join", joinData);
+  socket.emit("join", joinData, (error: string) => {
+    if (error) {
+      console.log("Error joining chat room:", error);
+    } else {
+      console.log("Joined chat room successfully", joinData.chatId);
+    }
+  });
 
   // Send a message
   const messageData: MessageData = {
