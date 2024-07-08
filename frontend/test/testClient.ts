@@ -1,68 +1,57 @@
+// test/socket.test.ts
 import { io, Socket } from "socket.io-client";
-// const io = require("socket.io-client");
+import { expect } from "chai";
 
-interface JoinData {
-  chatId: string;
-  userId: string;
-}
+describe("Socket.IO Server", () => {
+  let socket: Socket;
 
-interface MessageData {
-  chatId: string;
-  senderId: string;
-  receiverId: string;
-  content: string;
-}
+  beforeEach((done) => {
+    // Connect to the server
+    socket = io("http://localhost:5000");
+    socket.on("connect", done);
+  });
 
-interface TypingData {
-  chatId: string;
-  user: string;
-}
-
-const socket: Socket = io("http://localhost:5000", {
-  transports: ["websocket"],
-});
-
-socket.on("connect", () => {
-  console.log("Connected to server");
-
-  // Join a chat room
-  const joinData: JoinData = { chatId: "testRoom", userId: "user1" };
-  socket.emit("join", joinData, (error: string) => {
-    if (error) {
-      console.log("Error joining chat room:", error);
-    } else {
-      console.log("Joined chat room successfully", joinData.chatId);
+  afterEach((done) => {
+    // Disconnect from the server
+    if (socket.connected) {
+      socket.disconnect();
     }
+    done();
   });
 
-  // Send a message
-  const messageData: MessageData = {
-    chatId: "testRoom",
-    senderId: "user1",
-    receiverId: "user2",
-    content: "Hello, this is a test message!",
-  };
-  socket.emit("message", messageData);
-
-  // Listen for new messages
-  socket.on("newMessage", (message: MessageData) => {
-    console.log("New message received:", message);
+  it("should join a chat room", (done) => {
+    socket.emit("join", { chatId: "testRoom", userId: "user1" });
+    socket.on("joined", (userId: string) => {
+      expect(userId).to.equal("user1");
+      done();
+    });
   });
 
-  // Typing indicator
-  const typingData: TypingData = { chatId: "testRoom", user: "user1" };
-  socket.emit("typing", typingData);
-  socket.emit("stopTyping", typingData);
-});
+  it("should send and receive a message", (done) => {
+    socket.emit("message", {
+      chatId: "testRoom",
+      senderId: "user1",
+      receiverId: "user2",
+      content: "Hello, this is a test message!",
+    });
 
-socket.on("disconnect", () => {
-  console.log("Disconnected from server");
-});
+    socket.on("newMessage", (message: { content: string }) => {
+      expect(message.content).to.equal("Hello, this is a test message!");
+      done();
+    });
+  });
 
-socket.on("error", (error: string) => {
-  console.log("Error:", error);
-});
+  it("should handle typing events", (done) => {
+    socket.emit("typing", { chatId: "testRoom", user: "user1" });
+    socket.emit("stopTyping", { chatId: "testRoom", user: "user1" });
 
-socket.on("joined", (userId: string) => {
-  console.log(`User ${userId} joined the room`);
+    socket.on("typing", (user: string) => {
+      expect(user).to.equal("user1");
+    });
+
+    socket.on("stopTyping", (user: string) => {
+      expect(user).to.equal("user1");
+      done();
+    });
+  });
 });
