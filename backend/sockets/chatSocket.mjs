@@ -30,14 +30,16 @@ const chatSocket = (server) => {
       }
     });
 
-    // Emits a "typing" event to all clients in the same chat room, indicating that a user is typing.
+    // Emits a "typing" event to the recepient in the same chat room, indicating that a user is typing.
     socket.on("typing", (data) => {
-      socket.broadcast.to(data.chatId).emit("typing", data.user);
+      // io.to(data.chatId).emit("typing", data);
+      socket.emit("typing", data.userId)
     });
 
-    // Emits a "stopTyping" event to all clients in the same chat room, indicating that a user has stopped typing.
+    // Emits a "stopTyping" event to recepient in the same chat room, indicating that a user has stopped typing.
     socket.on("stopTyping", (data) => {
-      socket.broadcast.to(data.chatId).emit("stopTyping", data.user);
+      // socket.broadcast.to(data.chatId).emit("stopTyping", data.user);
+      socket.emit("stopTyping", data.userId)
     });
 
     // Logs a message when a user disconnects from the socket.
