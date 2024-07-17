@@ -45,7 +45,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-input {
-  margin-bottom: 0.8rem;
+.form input {
+  margin-bottom: 1.4rem;
+  min-width: 65%;
+  flex: 1;
 }
 </style>

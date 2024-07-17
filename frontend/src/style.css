@@ -5,6 +5,16 @@
   --color-bgD: #111622;
   --color-bgL: #13284b;
   --color-black: #121212;
+
+  /* Neon Green Gradient to lighter neon green */
+  --gradient-neon-green: linear-gradient(
+    135deg,
+    #288119,
+    #149714,
+    #47a047,
+    #39ff14
+  );
+
   /** End of Custom Colors */
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -19,6 +29,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* select all elements to reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 a {
@@ -38,19 +55,40 @@ body {
   min-height: 100vh;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+label {
+  font-size: 1.1em;
+  letter-spacing: 2px;
+  text-align: left;
+  flex: 1;
+}
+
+small {
+  font-size: 0.8em;
+}
 
 button {
+  outline: none;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  /* background-color: var(--color-black); */
+  background: var(--gradient-neon-green);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -81,6 +119,7 @@ button:focus-visible {
 }
 .form__alt,
 .form__footer {
+  /* margin-top: 0.5rem; */
   display: flex;
   gap: 1rem;
   justify-content: space-between;
@@ -97,11 +136,15 @@ input[type="password"] {
   font-size: 1rem;
   /* width: 100%; */
   outline: none;
+  background-color: #fff;
+  color: var(--color-black);
+  font-weight: 600;
+  flex: 1;
 }
 .form {
   background-color: var(--color-bgD);
   width: 400px;
-  padding: 2rem 1rem 5rem 1rem;
+  padding: 2rem 2rem 5rem 2rem;
   clip-path: polygon(
     20% 0%,
     80% 0%,
