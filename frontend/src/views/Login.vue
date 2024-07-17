@@ -14,7 +14,7 @@
         <div class="form__footer">
           <div class="form__alt">
             <small>You don't have an account?</small>
-            <router-link to="register">Signup</router-link>
+            <router-link to="register"><small>Signup</small></router-link>
           </div>
           <button type="submit">Login</button>
         </div>
@@ -44,4 +44,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+input {
+  margin-bottom: 0.8rem;
+}
+</style>
