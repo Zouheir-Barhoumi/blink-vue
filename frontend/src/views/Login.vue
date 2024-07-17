@@ -1,7 +1,7 @@
 <template>
-  <div class="formWrapper">
+  <div class="form_wrapper">
     <div class="form">
-      <h1 class="formTitle">Login</h1>
+      <h1 class="form__title">Login</h1>
       <form @submit.prevent="" method="post">
         <div class="form__field">
           <label for="email">Email</label>

@@ -1,19 +1,20 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  /** Custom Colors */
+  --color-neon-green: #39ff14;
+  --color-neon-blue: #00ffff;
+  --color-bgD: #111622;
+  --color-bgL: #13284b;
+  --color-black: #121212;
+  /** End of Custom Colors */
+
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.75;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--color-black);
 
-  /** Custom Colors */
-  --color-neon-green: #39ff14;
-  --color-neon-blue: #00ffff;
-  --color-bgD: "#111622";
-  --color-bgL: "#13284B";
-  --color-black: "#121212";
-  /** End of Custom Colors */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -97,6 +98,26 @@ input[type="password"] {
   /* width: 100%; */
   outline: none;
 }
+.form {
+  background-color: var(--color-bgD);
+  width: 400px;
+  padding: 2rem 1rem 5rem 1rem;
+  clip-path: polygon(
+    20% 0%,
+    80% 0%,
+    100% 20%,
+    100% 80%,
+    80% 100%,
+    20% 100%,
+    0% 80%,
+    0% 20%
+  );
+}
+
+.form_wrapper {
+  filter: drop-shadow(0 0 0.75rem var(--color-neon-green));
+}
+
 /** End of General Style */
 
 @media (prefers-color-scheme: light) {
