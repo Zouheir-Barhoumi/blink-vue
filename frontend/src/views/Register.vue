@@ -1,3 +1,6 @@
+<template>
+  <div>HELLO, WORLDS!</div>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 
@@ -7,9 +10,5 @@ export default defineComponent({
   },
 });
 </script>
-
-<template>
-  <div></div>
-</template>
 
 <style scoped></style>

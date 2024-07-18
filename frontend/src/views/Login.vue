@@ -2,7 +2,7 @@
   <div class="form_wrapper">
     <div class="form">
       <h1 class="form__title">Login</h1>
-      <form @submit.prevent="" method="post">
+      <form @submit.prevent="handleSubmit" method="post">
         <div class="form__field">
           <label for="email">Email</label>
           <input type="email" id="email" v-model="form.email" />
