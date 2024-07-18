@@ -3,21 +3,27 @@
 </script>
 
 <template>
-  <router-view></router-view>
-  <!-- <HelloWorld msg="Vite + Vue" /> -->
+  <div>
+    <div class="logo">
+      <img src="./assets/logo.png" alt="logo" />
+    </div>
+    <router-view></router-view>
+    <!-- <HelloWorld msg="Vite + Vue" /> -->
+  </div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
+<style>
+.logo img {
+  height: 7em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: 0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.logo img:hover {
+  filter: drop-shadow(0 0 2em var(--color-bgL));
 }
 </style>

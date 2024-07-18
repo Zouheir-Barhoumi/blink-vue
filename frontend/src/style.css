@@ -53,6 +53,11 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  position: relative;
+  background-color: var(--color-bgD);
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 h1,
