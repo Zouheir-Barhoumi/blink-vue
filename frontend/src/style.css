@@ -110,6 +110,8 @@ button:focus-visible {
 }
 
 #app {
+  width: 100%;
+  height: 100vh;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -164,6 +166,9 @@ input[type="password"] {
 
 .form_wrapper {
   filter: drop-shadow(0 0 0.75rem var(--color-neon-green));
+  display: flex;
+  justify-content: center;
+  margin-top: 10vh;
 }
 
 /** End of General Style */

@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    <div class="logo">
+    <div class="logo" v-on:click="$router.push('/')">
       <img src="./assets/logo.png" alt="logo" />
     </div>
     <router-view></router-view>
@@ -24,6 +24,7 @@
   left: 0;
 }
 .logo img:hover {
-  filter: drop-shadow(0 0 2em var(--color-bgL));
+  cursor: pointer;
+  filter: drop-shadow(0 0 2em var(--color-neon-blue));
 }
 </style>
