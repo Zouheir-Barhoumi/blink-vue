@@ -65,6 +65,6 @@ export default defineComponent({
 img {
   padding: 0;
   margin: 0;
-  border-radius: 1rem;
+  border-radius: 1rem 1rem 0 1rem;
 }
 </style>
