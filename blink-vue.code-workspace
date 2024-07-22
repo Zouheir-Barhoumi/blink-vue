@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../blink/frontend"
+		}
+	],
+	"settings": {
+		"vs-code-prettier-eslint.prettierLast": false
+	}
+}
