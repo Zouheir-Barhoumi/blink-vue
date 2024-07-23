@@ -8,6 +8,7 @@
         </div>
       </div>
     </div>
+    <div class="main">Welcome, John Doe!</div>
   </div>
 </template>
 
@@ -66,5 +67,14 @@ img {
   padding: 0;
   margin: 0;
   border-radius: 1rem 1rem 0 1rem;
+}
+
+.main {
+  max-width: 1280px;
+  height: 100%;
+  background: #000;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
 }
 </style>
