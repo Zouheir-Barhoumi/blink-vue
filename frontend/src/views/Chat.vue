@@ -8,16 +8,20 @@
         </div>
       </div>
     </div>
-    <div class="main">Welcome, John Doe!</div>
+    <div class="main">
+      <ContactList />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import ContactList from "../components/chat/ContactList.vue";
 
 export default defineComponent({
-  name: "Home",
-
+  components: {
+    ContactList,
+  },
   setup() {
     return {};
   },
