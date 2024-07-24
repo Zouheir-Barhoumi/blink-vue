@@ -48,6 +48,7 @@
 }
 .contacts__card--left {
   position: relative;
+  display: flex;
 }
 .avatar {
   height: 50px;
