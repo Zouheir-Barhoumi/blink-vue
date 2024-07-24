@@ -15,7 +15,7 @@
           </div>
           <div class="form__footer">
             <div class="form__alt">
-              <small>You don't have an account?</small>
+              <small>Don't have an account?</small>
               <router-link to="register"><small>Signup</small></router-link>
             </div>
             <button type="submit">Login</button>
