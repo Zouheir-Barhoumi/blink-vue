@@ -24,13 +24,13 @@
 
 <style scoped>
 .contacts {
-  background: var(--color-black);
+  background: transparent;
   border-radius: 1.4rem;
   min-width: 18rem;
-  height: calc(100vh - 5.4rem);
   padding: 8px 4px;
   overflow-y: auto;
-  border: 1px solid var(--color-neon-green);
+  box-shadow: inset 0 4px 8px 1rem rgba(57, 255, 20, 0.05);
+  border: 1px solid var(--color-grey);
 }
 .contacts__list {
   display: flex;
@@ -39,9 +39,12 @@
 .contacts__card {
   display: flex;
   align-items: center;
-  background: var(--gradient-neon-green);
+  /* background: var(--gradient-neon-green); */
   border-radius: 1rem;
   cursor: pointer;
+  border: 2px solid var(--color-grey);
+  box-shadow: 0 4px 4px 1px var(--color-grey);
+  padding: 0.5rem;
 }
 .contacts__card--left {
   position: relative;

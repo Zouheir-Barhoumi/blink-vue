@@ -75,10 +75,11 @@ img {
 
 .main {
   max-width: 1280px;
-  height: 100%;
-  background: #000;
+  height: calc(100vh - 98px);
+  /* background: #000; */
   padding: 0;
   display: flex;
   gap: 1rem;
+  padding-top: 2rem;
 }
 </style>
