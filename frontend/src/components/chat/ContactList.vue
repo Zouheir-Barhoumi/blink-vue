@@ -1,6 +1,9 @@
 <template>
   <div class="contacts">
-    <h3>Contacts</h3>
+    <div class="contacts--top">
+      <span>Contacts</span>
+      <span>User name</span>
+    </div>
     <div class="contacts__list">
       <div class="contacts__card">
         <div class="contacts__card--left">
@@ -30,7 +33,21 @@
   padding: 8px 4px;
   overflow-y: auto;
   box-shadow: inset 0 4px 8px 1rem rgba(57, 255, 20, 0.05);
-  border: 1px solid var(--color-grey);
+  border: 1px solid var(--color-neon-green);
+}
+.contacts--top {
+  display: flex;
+  flex-direction: column;
+  /* background: var(--color-grey); */
+  width: 100%;
+  position: sticky;
+}
+.contacts--top span:first-child {
+  font-size: 1.6rem;
+}
+.contacts--top span:last-child {
+  font-size: 1.2rem;
+  color: var(--color-off-white);
 }
 .contacts__list {
   display: flex;
